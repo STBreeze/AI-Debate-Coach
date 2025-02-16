@@ -91,7 +91,6 @@ def evaluate_argument():
     **Improved Argument:**  
     (Provide the improved version of the argument)
     """
-
     try:
         response = model.generate_content(prompt)
 
@@ -104,16 +103,20 @@ def evaluate_argument():
         ai_output = response.text.strip()
 
         # Extract rationality score
-        score_line = next((line for line in ai_output.split("\n") if "Rationality Score:" in line), None)
-        rationality_score = float(re.search(r"[-+]?\d*\.\d+|\d+", score_line).group()) if score_line else 0.5
+        rationality_score_match = re.search(r"\*\*Rationality Score:\*\* (\d+\.\d+|\d+)", ai_output)
+        rationality_score = float(rationality_score_match.group(1)) if rationality_score_match else 0.5
 
         # Extract reason for score
-        reason_start = ai_output.find("**Reasoning for Score:**")
-        reason_for_score = ai_output[reason_start:].strip() if reason_start != -1 else "No reasoning provided."
+        reasoning_match = re.search(r"\*\*Reasoning for Score:\*\*\s*(.*?)(?=\*\*Feedback:\*\*|\Z)", ai_output, re.DOTALL)
+        reason_for_score = reasoning_match.group(1).strip() if reasoning_match else "No reasoning provided."
 
         # Extract feedback
-        feedback_start = ai_output.find("**Feedback:**")
-        feedback = ai_output[feedback_start:].strip() if feedback_start != -1 else "No feedback provided."
+        feedback_match = re.search(r"\*\*Feedback:\*\*\s*(.*?)(?=\*\*Improved Argument:\*\*|\Z)", ai_output, re.DOTALL)
+        feedback = feedback_match.group(1).strip() if feedback_match else "No feedback provided."
+
+        # Extract improved argument
+        improved_argument_match = re.search(r"\*\*Improved Argument:\*\*\s*(.*)", ai_output, re.DOTALL)
+        improved_argument = improved_argument_match.group(1).strip() if improved_argument_match else "No improved argument provided."
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -121,7 +124,8 @@ def evaluate_argument():
     return jsonify({
         "rationality_score": rationality_score,
         "reason_for_score": reason_for_score,
-        "feedback": feedback
+        "feedback": feedback,
+        "improved_argument": improved_argument,
     })
 
 if __name__ == "__main__":
