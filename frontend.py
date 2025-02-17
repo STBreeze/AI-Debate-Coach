@@ -7,7 +7,7 @@ import io
 st.title("🎤 AI Powered Debate Coach")
 
 # Set backend URL using environment variable (or fallback to local)
-BACKEND_URL = os.environ.get("BACKEND_URL", "http://127.0.0.1:5000")  # Uncomment for deployment
+BACKEND_URL = os.environ.get("BACKEND_URL", "http://127.0.0.1:5000")
 
 # Initialize session state variables
 if "transcribed_text" not in st.session_state:
@@ -23,7 +23,7 @@ if "rationality_score" not in st.session_state:
 if "improved_argument" not in st.session_state:
     st.session_state.improved_argument = ""
 if "prev_audio_bytes" not in st.session_state:
-    st.session_state.prev_audio_bytes = None  # Ensure it's always initialized
+    st.session_state.prev_audio_bytes = None 
 
 # **Text Input for Debate Topic**
 st.subheader("🎯 Debate Topic")
@@ -74,7 +74,7 @@ if evaluate_button:
         st.session_state.rationality_score = result.get("rationality_score", None)
         st.session_state.reason_for_score = result.get("reason_for_score", "No reasoning provided.")
         st.session_state.feedback = result.get("feedback", "No feedback provided.")
-        st.session_state.improved_argument = result.get("improved_argument", "No improved argument provided.")  # ✅ Ensure improved argument is saved
+        st.session_state.improved_argument = result.get("improved_argument", "No improved argument provided.")
 
     elif response.status_code == 400:  # Handle Gemini's blocked response
         st.session_state.feedback = "⚠️ AI could not generate a response due to content restrictions. Please rephrase your argument."
@@ -97,6 +97,6 @@ if st.session_state.feedback:
     st.write(st.session_state.feedback)
 
 # ✅ **Fixed the Improved Argument Display**
-if st.session_state.improved_argument:  # Ensure correct session state variable is used
+if st.session_state.improved_argument:
     st.subheader("🗣️ Improved Argument:")
     st.write(st.session_state.improved_argument)

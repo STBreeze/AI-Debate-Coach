@@ -2,7 +2,7 @@ import os
 import speech_recognition as sr
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
-import google.generativeai as genai  # Google Gemini API
+import google.generativeai as genai
 import re
 
 # Load API Key
@@ -11,7 +11,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Initialize Gemini AI
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-pro")  # Use Gemini-Pro for text-based tasks
+model = genai.GenerativeModel("gemini-pro")
 
 # Initialize Flask app
 app = Flask(__name__)
