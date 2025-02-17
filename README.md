@@ -4,7 +4,7 @@
 
 AI-Powered Debate Coach is a web application designed to help users improve their debate arguments using AI-driven feedback and a rationality meter. It allows users to record or type their arguments, receive AI-powered analysis, and refine their statements based on logical feedback.
 
-![Project Demo](assests/images/Project_Demo.png) <!-- Upload a screenshot of the UI showing a full analysis -->
+![Project Demo](assests\images\Project_Demo.png) <!-- Upload a screenshot of the UI showing a full analysis -->
 
 ---
 
@@ -18,7 +18,7 @@ AI-Powered Debate Coach is a web application designed to help users improve thei
 ✅ **Google Gemini AI Integration**: Provides in-depth argument analysis.  
 ✅ **Deployed Online**: Access the tool via a live URL.
 
-![Recording Feature](assests/images/Recording_Feature.png) <!-- Screenshot of the recording button in action -->
+![Recording Feature](assests\images\Recording_Feature.png) <!-- Screenshot of the recording button in action -->
 
 ---
 
@@ -30,9 +30,9 @@ AI-Powered Debate Coach is a web application designed to help users improve thei
 4️⃣ **View rationality score & AI feedback**  
 5️⃣ **Improve your argument based on the feedback**
 
-![Sample Topic and Argument](assests/images/Sample_Topic&Argument.png)
-![AI Feedback Screenshot](assests/images/AI_Feedback.png) <!-- Screenshot showing AI feedback in action -->
-![AI Feedback Screenshot](assests/images/AI_Feedback_2.png)
+![Sample Topic and Argument](assests\images\Sample_Topic&Argument.png)
+![AI Feedback Screenshot](assests\images\AI_Feedback.png) <!-- Screenshot showing AI feedback in action -->
+![AI Feedback Screenshot](assests\images\AI_Feedback_2.png)
 
 ---
 
@@ -109,50 +109,17 @@ GEMINI_API_KEY=your_api_key_here
 
 ### **5️⃣ Run the Application Locally**
 
-**Start Flask Backend (Frontend runs automatically)**
+**Start Flask Backend**
 
 ```bash
 python app.py
 ```
 
-### ⚠️ Important Notice - Flask Port Already in Use
+**Start Streamlit Frontend**
 
-If you **run `python app.py` multiple times without properly stopping the previous instance**, you may encounter this error: `Address already in use`
-
-🔹 **Why does this happen?**
-
-- When you stop the app using `CTRL + C`, sometimes Flask and Streamlit do **not fully release the port** (e.g., `5000` or `8501`).
-- This prevents the app from restarting correctly.
-
-🔹 **How to Fix It?**
-
-1. **Find & Kill the Process Using the Port:**
-
-   - **Windows (Command Prompt / PowerShell):**
-     ```bash
-     netstat -ano | findstr :5000
-     ```
-     Find the **Process ID (PID)** from the output, then run:
-     ```bash
-     taskkill /PID <PID> /F
-     ```
-   - **Mac/Linux (Terminal):**
-     ```bash
-     lsof -i :5000
-     ```
-     Find the **Process ID (PID)** and kill it:
-     ```bash
-     kill -9 <PID>
-     ```
-
-2. **Alternative Quick Fix:**
-   - Close your terminal & restart your system
-   - Or manually **change the port** in `app.py`:
-     ```python
-     app.run(debug=True, port=5001)  # Use a different port if needed
-     ```
-
-💡 **Best Practice:** Always **fully stop the app** before running `python app.py` again! 🚀
+```bash
+streamlit run frontend.py
+```
 
 ## ✨ Contributing
 
