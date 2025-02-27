@@ -9,9 +9,25 @@ import re
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
+# Check if it's loaded correctly
+if not GEMINI_API_KEY:
+    raise ValueError("⚠️ ERROR: GEMINI_API_KEY is missing!")
+
 # Initialize Gemini AI
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-pro")
+best_model = None
+
+for available_model in genai.list_models():
+    model_name = available_model.name.lower()
+    
+    if "gemini" in model_name and "flash" not in model_name and "vision" not in model_name:
+        best_model = available_model.name  # Store the best match
+        best_model = available_model.name.replace("models/", "")
+        break
+
+# Initialize model dynamically
+model = genai.GenerativeModel(best_model)
+print(f"✅ Using model: {best_model}")
 
 # Initialize Flask app
 app = Flask(__name__)
